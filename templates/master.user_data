@@ -1,0 +1,10 @@
+#cloud-config
+packages:
+ - nfs-utils
+ - rpcbind
+
+runcmd:
+ - service rpcbind start
+ - service nfs start
+ - service nfslock start
+ - python <(curl -s https://raw.githubusercontent.com/brianmckenna/necofs-cloud/master/test.py) {{id}} 
