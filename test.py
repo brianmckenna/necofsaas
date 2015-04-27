@@ -21,18 +21,17 @@ connection        = boto.ec2.connect_to_region(region) # TODO, we can change reg
 #iam.add_role_to_instance_profile('INSTANCE_PROFILE', 'NECOFS')
 
 # WHAT WE WANT TO PROVISION
-REQUESTER = 'Brian McKenna'
+REQUESTER = '@brianmckenna'
 # TODO:
 #     get out of database for selected run/version
-IMAGE_ID           = 'ami-146e2a7c' # Amazon Linux AMI 2014.09.2 (HVM) # TODO: use DB for this
-KEY_NAME           = 'bmckenna-ssh' # TODO: don't need this
-INSTANCE_TYPE      = 'm3.medium'
-PLACEMENT_GROUP    = 'FVCOM' # TODO: use DB for this
-SECURITY_GROUP_IDS = ['sg-54541b30']
-VPC_ID             = 'vpc-79b0e61c'
-SUBNET_ID          = 'subnet-52bc3c0b'
-IAM_ROLE           = 'NECOFS'
-INSTANCE_NAME      = 'Tom "Iceman" Kazanski' # For AWS management purposes, should be a string to help identify which run this is, maybe by date
+#IMAGE_ID           = 'ami-146e2a7c' # Amazon Linux AMI 2014.09.2 (HVM) # TODO: use DB for this
+#INSTANCE_TYPE      = 'm3.medium'
+#PLACEMENT_GROUP    = 'FVCOM' # TODO: use DB for this
+#SECURITY_GROUP_IDS = ['sg-54541b30']
+#VPC_ID             = 'vpc-79b0e61c'
+#SUBNET_ID          = 'subnet-52bc3c0b'
+#IAM_ROLE           = 'NECOFS'
+#INSTANCE_NAME      = 'Tom "Iceman" Kazanski' # For AWS management purposes, should be a string to help identify which run this is, maybe by date
 
 
 
