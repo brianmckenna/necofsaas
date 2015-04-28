@@ -1,6 +1,7 @@
 import flask
 import json
-import utils
+#import utils
+import traceback
 
 app = flask.Flask(__name__)
 
@@ -16,12 +17,26 @@ def meta(id):
     except:
         return '', 204
 
+@app.route('/<id>/volumes', methods=['GET'])
+def volumes(id):
+    '''
+    returns the 'VOLUMES' JSON data associated with this run. eventually this data is created per request
+    '''
+    try:
+        with open('%s.json' % id, 'r') as f:
+            d = json.load(f)['VOLUMES']
+            return flask.Response(flask.json.dumps(d),  mimetype='application/json')
+    except:
+        print traceback.format_exc()
+        return '', 204
+
+
+# TODO: async?
 @app.route('/<id>', methods=['POST'])
 def create(id):
     requester = '@brianmckenna'
     utils.master(id, requester)
     return '', 200
-
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=7000, debug=True)

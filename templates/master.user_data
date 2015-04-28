@@ -7,4 +7,5 @@ runcmd:
  - service rpcbind start
  - service nfs start
  - service nfslock start
- - python <(curl -s https://raw.githubusercontent.com/brianmckenna/necofs-cloud/master/test.py) {{id}} 
+ - [curl, -o, /tmp/necofs-cloud-mount.py, "https://raw.githubusercontent.com/brianmckenna/necofs-cloud/master/mount.py"]
+ - [python, /tmp/necofs-cloud-mount.py, "{{local_ipv4s}}", "{{id}}"]
