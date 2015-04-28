@@ -8,4 +8,4 @@ runcmd:
  - service nfs start
  - service nfslock start
  - [curl, -o, /tmp/necofs-cloud-mount.py, "https://raw.githubusercontent.com/brianmckenna/necofs-cloud/master/mount.py"]
- - [python, /tmp/necofs-cloud-mount.py, "{{local_ipv4s}}", "{{id}}"]
+ - [python, /tmp/necofs-cloud-mount.py, "{{local_ipv4}}", "{{id}}"]
