@@ -9,11 +9,12 @@ packages:
  - rsh
 
 runcmd:
+ - [sed, -i, "s/^\(.*disable.*=.*\)yes\(.*\)$/\1no\2/g", /etc/xinetd.d/rsh]
+ - [( grep rsh /etc/securetty ) || ( echo "rsh" >> /etc/securetty )]
  - service rpcbind start
  - service nfs start
  - service nfslock start
  - service xinetd start
- - [curl, -o, /tmp/necofs-cloud-mount.py, "https://raw.githubusercontent.com/brianmckenna/necofs-cloud/master/mount.py"]
- - [python, /tmp/necofs-cloud-mount.py, "{{local_ipv4}}", "{{id}}"]
- - [sed, -i, "s/^\(.*disable.*=.*\)yes\(.*\)$/\1no\2/g", /etc/xinetd.d/rsh]
- - [( grep rsh /etc/securetty ) || ( echo "rsh" >> /etc/securetty )]
+ - [aws, s3, cp, "s3://necofs/mount.py", "/tmp/mount.py"]
+ - [python, "/tmp/mount.py", "{{local_ipv4}}", "{{id}}"]
+ - [python, "/opt/necofs/bin/run.py"]

@@ -30,9 +30,9 @@ def master(id, requester):
                 image_id = meta['IMAGE_ID'],
                 key_name = meta['KEY_NAME'],
                 user_data = USER_DATA,
-                instance_type = meta['INSTANCE_TYPE'],
+                instance_type = meta['MASTER_INSTANCE_TYPE'],
                 instance_initiated_shutdown_behavior = 'terminate',
-                #placement_group=PLACEMENT_GROUP, # only for high level machines, not for testing
+                placement_group = meta['PLACEMENT_GROUP'],
                 network_interfaces = interfaces,
                 instance_profile_name = meta['IAM_ROLE']
             )
