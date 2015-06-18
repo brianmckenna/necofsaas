@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+  <head>
+    <title>NECOFSaaS: NECOFS as a Service</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <style>
+      table { table-layout: fixed; }
+      table th, table td { overflow: hidden; }
+      hr { margin-top: 10px; margin-bottom: 10px; }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="page-header">
+            <h1><img src="{{ url_for('static', filename='NERACOOS_logo_web_trans.gif') }}"><small>NECOFS as a Service in the Amazon AWS cloud</small></h1>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-8">
+          <ul class="nav nav-pills">
+            <li><a href="{{ url_for('documentation') }}"><span style="color: brown" class="glyphicon glyphicon-book"></span> documentation</a></li>
+            {% if current_user.is_authenticated %}
+            <li><a href="{{ url_for('logout') }}" data-toggle="modal"><span class="glyphicon glyphicon-log-out"></span> logout</a></li>
+            {% else %}
+            <li><a href="#login" data-toggle="modal"><span class="glyphicon glyphicon-log-in"></span> login</a></li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+
+      <hr />
+
+      {% if offerings %}
+      <table class="table table-bordered table-striped table-hover" style="margin-top: 30px;">
+        <thead>
+          <tr>
+            <th style="width: 300px">Description</th>
+            <th style="width: 225px">Info</th>
+            {% if current_user.is_authenticated %}
+            <th style="width: 100px">Actions</th>
+            {% endif %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for offering in offerings %}
+          <tr>
+            <td>
+              <h4><a href="{{ url_for('offering') }}">{{ offering.NAME }}</h4></a>
+              <span>{{ offering.description }}</span>
+            </td>
+            <td>
+              <a class="row" href=""><span class="glyphicon glyphicon-new-window"></span> GetCapabilities</a>
+            </td>
+            {% if current_user.is_authenticated %}
+            <td>
+              <a href="{{ url_for('execute') }}"><button type="button" class="btn btn-default btn-xs"><span style="color: green" class="glyphicon glyphicon-play"></span> execute</button></a>
+              <a href="{{ url_for('logs') }}"><button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-list"></span> logs</button></a>
+            </td>
+            {% endif %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <div class="row">
+        <div class="col-md-12">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">No offerings found.</a></h3>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+
+
+    <!-- Modal HTML -->
+    <div id="login" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">NECOFSaaS Login</h4>
+          </div>
+          <div class="modal-body">
+            <form method="post" action="/wms/login" name="loginForm">
+              <p><input type="text" class="span3" name="username" id="username" placeholder="username" value=""></p>
+              <p><input type="password" class="span3" id="password" name="password" placeholder="password"></p>
+              <p><button type="submit" class="btn btn-success">login</button></p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>
