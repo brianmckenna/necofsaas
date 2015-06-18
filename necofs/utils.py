@@ -5,7 +5,7 @@ import json
 import time
 
 # EC2 Instance metadata
-instance_metadata = boto.utils.get_instance_metadata()
+instance_metadata = boto.utils.get_instance_metadata(timeout=5, num_retries=1)
 instance_id       = instance_metadata.get('instance-id')
 placement         = instance_metadata.get('placement')
 availability_zone = placement.get('availability-zone')

@@ -2,7 +2,7 @@ import flask
 import flask.ext.login
 import glob
 import json
-import necofs.utils
+#import necofs.utils
 import traceback
 
 app = flask.Flask(__name__)
@@ -63,8 +63,8 @@ def logout():
 @app.route('/execute/<id>')
 def execute(id):
     requester = '@brianmckenna' # TODO: use Flask-Login for this
-    necofs.utils.create_master(id, requester) # TODO: async
-    return 'executing', 200
+    #necofs.utils.create_master(id, requester) # TODO: async
+    return 'executing ' + id, 200
 
 @app.route('/logs')
 def logs():
