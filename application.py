@@ -25,35 +25,17 @@ def _offerings():
             offerings.append(offering)
     return offerings
 
-@app.route('/<id>', methods=['GET'])
-def meta(id):
-    '''
-    returns the JSON data associated with this run. eventually this data is created per request
-    '''
+
+
+# REST
+@app.route('/offering/<id>', methods=['GET'])
+def offering(id):
     try:
         with open('%s.json' % id, 'r') as f:
             d = json.load(f)
             return flask.jsonify(**d)
     except:
         return '', 204
-
-@app.route('/<id>/volumes', methods=['GET'])
-def volumes(id):
-    '''
-    returns the 'VOLUMES' JSON data associated with this run. eventually this data is created per request
-    '''
-    try:
-        with open('%s.json' % id, 'r') as f:
-            d = json.load(f)['VOLUMES']
-            return flask.Response(flask.json.dumps(d),  mimetype='application/json')
-    except:
-        print traceback.format_exc()
-        return '', 204
-
-
-@app.route('/offering/<id>')
-def offering(id):
-    return 'offering', 200
 
 @app.route('/documentation')
 def documentation():
@@ -73,6 +55,10 @@ def execute():
 def logs():
     return 'logs', 200
 
+
+
+
+# UI
 @app.route('/')
 def index():
     offerings = _offerings()
