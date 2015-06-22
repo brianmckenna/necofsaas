@@ -9,8 +9,8 @@ packages:
  - rsh
 
 runcmd:
- - [sed, -i, "s/^\(.*disable.*=.*\)yes\(.*\)$/\1no\2/g", /etc/xinetd.d/rsh]
- - [( grep rsh /etc/securetty ) || ( echo "rsh" >> /etc/securetty )]
+ - [sed, -i, 's/^\(.*disable.*=.*\)yes\(.*\)$/\1no\2/g', /etc/xinetd.d/rsh]
+ - ( grep rsh /etc/securetty ) || ( echo 'rsh' >> /etc/securetty )
  - service rpcbind start
  - service nfs start
  - service nfslock start
