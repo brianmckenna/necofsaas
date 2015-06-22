@@ -45,7 +45,7 @@ def create_master(id, requester):
                 instance_profile_name = config['IAM_ROLE']
             )
 
-            # -- loop until instance is running and update tags
+            # -- loop until instance is running and update tags #TODO: async here, we don't want to wait
             for instance in reservation.instances:
                 status = instance.update()
                 while status == 'pending':
@@ -53,7 +53,6 @@ def create_master(id, requester):
                     status = instance.update()
                 instance.add_tag('Name', config['INSTANCE_NAME'])
                 instance.add_tag('REQUESTER', requester)
-
 
             return reservation
 

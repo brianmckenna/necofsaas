@@ -25,11 +25,12 @@
       <div class="row">
         <div class="col-md-8">
           <ul class="nav nav-pills">
-            <li><a href="{{ url_for('documentation') }}"><span style="color: brown" class="glyphicon glyphicon-book"></span> documentation</a></li>
+            <li><a href="{{ url_for('documentation') }}"><span style="color: brown" class="glyphicon glyphicon-book"></span> Documentation</a></li>
+            <li><a href="{{ url_for('logs') }}"><span class="glyphicon glyphicon-list"></span> Logs</a></li>
             {% if current_user.is_authenticated %}
-            <li><a href="{{ url_for('logout') }}" data-toggle="modal"><span class="glyphicon glyphicon-log-out"></span> logout</a></li>
+            <li><a href="{{ url_for('logout') }}" data-toggle="modal"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
             {% else %}
-            <li><a href="#login" data-toggle="modal"><span class="glyphicon glyphicon-log-in"></span> login</a></li>
+            <li><a href="#login" data-toggle="modal"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
             {% endif %}
           </ul>
         </div>
@@ -37,48 +38,43 @@
 
       <hr />
 
-      {% if offerings %}
-      <table class="table table-bordered table-striped table-hover" style="margin-top: 30px;">
-        <thead>
-          <tr>
-            <th style="width: 300px">Description</th>
-            <th style="width: 225px">Info</th>
-            {% if current_user.is_authenticated %}
-            <th style="width: 100px">Actions</th>
-            {% endif %}
-          </tr>
-        </thead>
-        <tbody>
-          {% for offering in offerings %}
-          <tr>
-            <td>
-              <h4><a href="{{ url_for('offering') }}">{{ offering.NAME }}</h4></a>
-              <span>{{ offering.description }}</span>
-            </td>
-            <td>
-              <a class="row" href=""><span class="glyphicon glyphicon-new-window"></span> GetCapabilities</a>
-            </td>
-            {% if current_user.is_authenticated %}
-            <td>
-              <a href="{{ url_for('execute', id=offering.NAME) }}"><button type="button" class="btn btn-default btn-xs"><span style="color: green" class="glyphicon glyphicon-play"></span> execute</button></a>
-              <a href="{{ url_for('logs') }}"><button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-list"></span> logs</button></a>
-            </td>
-            {% endif %}
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-      {% else %}
-      <div class="row">
-        <div class="col-md-12">
-          <div class="panel panel-primary">
-            <div class="panel-heading">
-              <h3 class="panel-title">No offerings found.</a></h3>
+      <form>
+
+        <div class="panel panel-default">
+          <div class="panel-heading">Configuration</div>
+          <div class="panel-body">
+
+            <div class="form-group">
+              <label for="dates" class="col-sm-2 control-label">Dates</label>
+              <div class="col-sm-10">
+                {% for date in dates %}
+                <div class="radio">
+                  <label>
+                    <input type="radio" name="date" id="{{ date.isoformat() }}" value="{{ date.isoformat() }}"> {{ date.isoformat() }}
+                  </label>
+                </div>
+                {% endfor %}
+              </div>
             </div>
+
+            <div class="form-group">
+              <label for="offerings" class="col-sm-2 control-label">Offering</label>
+              <div class="col-sm-10">
+                {% for offering in offerings %}
+                <div class="radio">
+                  <label>
+                    <input type="radio" name="offering" id="{{ offering.ID }}" value="{{ offering.ID }}"> {{ offering.NAME }} <a href="{{ url_for('offering', id=offering.ID) }}"><span class="glyphicon glyphicon-info-sign"></span></a>
+                  </label>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-default"><span style="color: green" class="glyphicon glyphicon-play"></span> execute</button>
           </div>
         </div>
-      </div>
-      {% endif %}
+      </form>
+
     </div>
 
 

@@ -1,3 +1,4 @@
+import datetime
 import flask
 import flask.ext.login
 import glob
@@ -12,6 +13,8 @@ app.secret_key = 'fb32e85e-f645-430e-bc15-8d1dedec5cb9'
 login_manager = flask.ext.login.LoginManager()
 login_manager.init_app(app)
 
+
+# get the offerings/configurations
 def _offerings():
     offerings = []
     jsons = glob.glob('*.json')
@@ -48,8 +51,8 @@ def volumes(id):
         return '', 204
 
 
-@app.route('/offering')
-def offering():
+@app.route('/offering/<id>')
+def offering(id):
     return 'offering', 200
 
 @app.route('/documentation')
@@ -60,10 +63,10 @@ def documentation():
 def logout():
     return 'logout', 200
 
-@app.route('/execute/<id>')
-def execute(id):
+@app.route('/execute')
+def execute():
     requester = '@brianmckenna' # TODO: use Flask-Login for this
-    #necofs.utils.create_master(id, requester) # TODO: async
+    necofs.utils.create_master(id, requester) # TODO: async
     return 'executing ' + id, 200
 
 @app.route('/logs')
@@ -73,8 +76,8 @@ def logs():
 @app.route('/')
 def index():
     offerings = _offerings()
-    print offerings
-    return flask.render_template('index.html', offerings=offerings)
+    dates = [datetime.datetime(2006, 11, 21, 16, 30), datetime.datetime(2009, 7, 21, 16, 30)] #TODO
+    return flask.render_template('index.html', offerings=offerings, dates=dates)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=7000, debug=True)
